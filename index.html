@@ -3,22 +3,6 @@
 <head>
 	<title> Patrick Manalu </title>
 	<style>
-		a:link{
-			text-decoration:none;
-			color:none;
-		}
-		a:visited{
-			text-decoration:none;
-			color:none;
-		}
-		a:hover{
-			text-decoration:none;
-			color:none;
-		}
-		a:active{
-			text-decoration:none;
-			color:none;
-		}
 		.head_div{
 			width:100%;
 			margin: 0px 10px 0px -10px;
@@ -36,25 +20,29 @@
 			-ms-transform: translate(-50%, -50%);
 			transform: translate(-50%, -50%);
 			width:70em;
-			height:30em;
+			height:31em;
 			background-color:black;
 			border:2px solid rgb(29, 28, 28);
 			border-radius:15px;
 		}
-		.head1{
+		.menuButton{
 			display: block;
+			padding-top:10%;
+			padding-bottom:10%;
 			color:#e0d9ca;
 			font-family:Helvetica, Arial, Verdana;
 			font-weight:bold;
 			font-size:3em;
+			background: none;
+			border:none;
 		}
 		.left_bar{
 			float: left;
 			width: 25%;
 			height: 95%;
-			margin: 0.6em 0px 0px 10px;
-			padding-right: 2%;
-			border-right: 2px solid #e0d9ca;
+			margin: 0.65em 0px 0px 10px;
+			padding-right: 3%;
+			border-right: 2px solid rgb(29, 28, 28);
 			color:#e0d9ca;
 			text-align:left;
 		}
@@ -63,6 +51,7 @@
 			width: 70%;
 			height: 95%;
 			text-align: left;
+			margin-top:0.65em;
 			color:#e0d9ca;
 		}
 		.copyright_footer{
@@ -75,41 +64,93 @@
 			font-size:0.5em;
 			color:#e0d9ca;
 		}
-		.filler{
-			padding-left:15%;
-			padding-top:11%;
-			font-family:Helvetica, Arial, Verdana;
-			font-weight:bold;
-			font-size:3em;
-			color: #e0d9ca;
-
+		.content_child{
+			width:100%;
+			height: 100%;
+			border: none;
+			display: none;
 		}
 		.clear{
 			clear: both;
 		}
 
+		#content_container{
+			opacity:1;
+			transition: 0.25s;
+			counts:0;
+		}
+		#content_container.hide{
+			opacity: 0;
+		}
+
 	</style>
+	<script>
+		var page_current = "c_0";
+		var page_active = "";
+		var page_prev = "";
+		function getTransitionEndEventName() {
+			var transitions = {
+				"transition"      : "transitionend",
+				"OTransition"     : "oTransitionEnd",
+				"MozTransition"   : "transitionend",
+				"WebkitTransition": "webkitTransitionEnd"
+		}
+		let bodyStyle = document.body.style;
+		for(let transition in transitions) {
+			if(bodyStyle[transition] != undefined) {
+				return transitions[transition];
+			} 
+		}
+		}
+		function toggleVisibility(object){
+			let active_container = document.getElementById(page_active);
+			let current_container = document.getElementById(page_current);
+			
+			var stage = object.target.style.counts;
+			if (stage == 0){
+				page_current = page_active
+				current_container.style.display = "none";
+				active_container.style.display = "inherit";
+				object.target.style.counts += 1;
+				object.target.classList.toggle("hide");
+			} else if (stage == 1){
+				object.target.style.counts = 0;
+			}
+		}
+		function toggleContent(id) {
+			var container = document.getElementById("content_container");
+			page_active = id.replace('m', 'c');
+			if(page_current != page_active){
+				let transName = getTransitionEndEventName();
+				container.addEventListener(transName, toggleVisibility, false);
+				container.classList.toggle("hide");
+				container.style.counts = 0;
+			}
+		}
+	</script>
 </head>
 	<body style="background-color:#16161D; font:15px Arial">
 		<div class="main">
 			<div class="left_bar">
-				<h1 class="head1">
+				<button id="m_1" class="menuButton", type="button", onclick="toggleContent(this.id)">
 					About Me
-				</h1>
-				<h1 class="head1">
+				</button>
+				<button id="m_2" class="menuButton", type="button", onclick="toggleContent(this.id)">
 					Experiences
-				</h1>
-				<h1 class="head1">
+				</button>
+				<button id="m_3" class="menuButton", type="button", onclick="toggleContent(this.id)">
 					Projects
-				</h1>
-				<h1 class="head1">
+				</button>
+				<button id="m_4" class="menuButton", type="button", onclick="toggleContent(this.id)">
 					Contact
-				</h1>
+				</button>
 			</div>
-			<div class="content_zone">
-				<p class="filler">
-					This page is still under construction. Expect some new updates soon!
-				</p>
+			<div class="content_zone" id = "content_container">
+				<iframe src="", class="content_child", id="c_0"></iframe>
+				<iframe src="src/about.html", class="content_child", id="c_1"></iframe>
+				<iframe src="src/experience.html", class="content_child", id="c_2"></iframe>
+				<iframe src="src/project.html", class="content_child", id="c_3"></iframe>
+				<iframe src="src/contact.html", class="content_child", id="c_4"></iframe>
 			</div>
 			<div class="clear"></div>
 			<div class="copyright_footer"> © 2023 Patrick Manalu</div>
