@@ -73,7 +73,6 @@
 		.clear{
 			clear: both;
 		}
-
 		#content_container{
 			opacity:1;
 			transition: 0.25s;
@@ -82,12 +81,35 @@
 		#content_container.hide{
 			opacity: 0;
 		}
-
+		#c_o{
+			width:100%;
+			height: 100%;
+		}
+		#logo{
+			top:22%;
+			left: 54%;
+			position:absolute;
+			padding-left:1.2%;
+			padding-right:1.2%;
+			padding-top:0.15%;
+			padding-bottom:0.05%;
+			opacity:0.6;
+			transition:1s;
+		}
+		#logo.fifo{
+			opacity:0.2;
+		}
 	</style>
 	<script>
 		var page_current = "c_0";
 		var page_active = "";
 		var page_prev = "";
+
+		//create fade-in fade-out animation for logo on load
+		window.onload = function() {
+			fadeInfadeOut();
+		};
+
 		function getTransitionEndEventName() {
 			var transitions = {
 				"transition"      : "transitionend",
@@ -102,7 +124,8 @@
 			} 
 		}
 		}
-		function toggleVisibility(object){
+
+		function toggleChangeWindow(object){
 			let active_container = document.getElementById(page_active);
 			let current_container = document.getElementById(page_current);
 			
@@ -119,13 +142,38 @@
 		}
 		function toggleContent(id) {
 			var container = document.getElementById("content_container");
+			var but_active = document.getElementById(id);
+			
+			// Highlight the active menu
+			if(page_current != "c_0"){
+				let curr_id = page_current.replace('c', 'm')
+				let but_curr = document.getElementById(curr_id);
+				but_curr.style.textShadow = "0 0 0 white";
+			}
+			but_active.style.textShadow = "0 0 3px white";
+
+			// Logic to change page. Fade out, change div, fade in.
 			page_active = id.replace('m', 'c');
 			if(page_current != page_active){
 				let transName = getTransitionEndEventName();
-				container.addEventListener(transName, toggleVisibility, false);
+				container.addEventListener(transName, toggleChangeWindow, false);
 				container.classList.toggle("hide");
 				container.style.counts = 0;
 			}
+		}
+
+		// Function for logo animation.
+		function togglefifo(object){
+			if(page_current === "c_0"){
+				object.target.classList.toggle("fifo")
+			}
+		}
+		function fadeInfadeOut(){
+			var container = document.getElementById("logo");
+			let transName = getTransitionEndEventName();
+			container.addEventListener(transName, togglefifo, false);
+			container.classList.toggle("fifo");
+
 		}
 	</script>
 </head>
@@ -146,7 +194,9 @@
 				</button>
 			</div>
 			<div class="content_zone" id = "content_container">
-				<iframe src="", class="content_child", id="c_0"></iframe>
+				<div id="c_0">
+					<img src="assets/logo.png" alt="logo" id="logo">
+				</div>
 				<iframe src="src/about.html", class="content_child", id="c_1"></iframe>
 				<iframe src="src/experience.html", class="content_child", id="c_2"></iframe>
 				<iframe src="src/project.html", class="content_child", id="c_3"></iframe>
