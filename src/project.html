@@ -2,9 +2,63 @@
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .card{
+            width:45%;
+            height:5em;
+            border:1px solid #e0d9ca;
+            margin-bottom:3%;
+            margin-left:1.5%;
+            border-radius: 10px;
+            float: left;
+        }
+        .content{
+            font-size: 0.4em;
+            margin-left: 10px;
+        }
+        .subcontent{
+            font-size: 0.3em;
+            margin-left: 10px;
+            font-style: italic;
+        }
+        #master{
+            display: inherit;
+            padding-left:5%;
+            padding-top:2.5%;
+            padding-bottom:2.5%;
+        }
+
+        /* Customized Scrollbar */
+        ::-webkit-scrollbar {
+            width:5px;
+        }
+        ::-webkit-scrollbar-track{
+            background: black;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #090909;
+        }
+    </style>
 </head>
-<div class="filler">
-    <p>This will be a card-style list of projects i've done. Not a lot!</p>
+<div class="filler" id="master">
+    <div class="card">
+        <h3 class="content">Self-Supervised Depth Estimation with Deep Learning</h3>
+        <h4 class="subcontent">Master's project, 2022. Researched and implemented CNNs that estimates depth-map from a single image. (Python)</h4>
+    </div>
+    <div class="card">
+        <h3 class="content">Active Learning for Occlusion Handling of Plants</h3>
+        <h4 class="subcontent">Master's thesis, 2022. Researched and implemented methods of active learning
+                                to measure the effect of active learning on a dataset of plants. (Python)</h4></div>
+
+    <div class="card">
+        <h3 class="content">Implementation of Fuzzy Logic Control System for Wheeled Robot Navigation in an Unknown Environment</h3>
+        <h4 class="subcontent">Bachelor's thesis, 2018. Implemented fuzzy inference system to control the velocity of a robot's wheel to navigate through
+                                obstacles to reach a target destination. (Arduino)
+        </h4></div>
+
+    <div class="card">
+        <h3 class="content">Deep Neural Net (WIP)</h3>
+        <h4 class="subcontent">Hobby project. Tried to implement a working multi-layer perceptron library to understand the basic concept of neural network. (Python)</h4></div>
 </div>
     
 </html>
